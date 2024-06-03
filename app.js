@@ -12,16 +12,18 @@ const seedDB = require("./seed");
 const methodOverride = require('method-override');
 const movieRoutes = require('./routes/movieRoutes')
 const reviewsRoutes = require('./routes/reviewRoutes')
+require('dotenv').config();
 const cartRoutes = require('./routes/cartRoutes')
 
 
-mongoose.connect('mongodb://127.0.0.1:27017/MovieApp')
-.then(()=>{
-    console.log('DB connected.')
-})
-.catch(()=>{
-    console.log('Error connecting');
-})
+mongoose
+  .connect(process.env.MongoConnection)
+  .then(() => {
+    console.log("DB connected.");
+  })
+  .catch(() => {
+    console.log("Error connecting");
+  });
 
 const sessionset = {
     secret: 'keyboard cat',
@@ -70,6 +72,6 @@ app.use(UserRoutes);
 app.use(cartRoutes);
 
 
-app.listen(8000,()=>{
+app.listen(process.env.PORT,()=>{
     console.log("listening on " +8000);
 })
