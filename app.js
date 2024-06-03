@@ -51,7 +51,6 @@ passport.deserializeUser(User.deserializeUser());
 
 passport.use(new LocalStrategy(User.authenticate()));
 
-// locals flash 
 app.use((req,res,next)=>{
     // console.log(req.user)
     res.locals.currentUser = req.user;
