@@ -1,0 +1,28 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    
+}
+
+.main_body{
+    background-color: lightgoldenrodyellow;
+}
+
+.UserLogin{
+   
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.box{
+    width: 400px;
+    height: 400px;
+    background-color: #EEF0E5;
+}
+
+.sing_page{
+    background-color:#EEF0E5 ;
+}

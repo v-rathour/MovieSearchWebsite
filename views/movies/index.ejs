@@ -1,0 +1,165 @@
+<%- include('../partials/header') %>
+
+<style>
+    .title{
+    text-align: center;
+    font-size: 5rem;
+    padding-top: 1.5rem;
+    font-weight: 600;
+    color: var(--color3);
+    }
+
+    .search-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 600px;
+    height: 5rem;
+    background: #1C2541;
+    padding: 1rem;
+    border-radius: 2rem;
+    color: #fff;
+    margin: 0 auto;
+    margin-top: 5rem;
+    } 
+
+    #search{
+    margin: 0 0.5rem 0 0.5rem;
+    width: 100%;
+    border: none;
+    outline: none;
+    background: #1C2541;
+    color: #fff;
+    }
+
+    #search::placeholder{
+    color: #6FFFE9;
+    font-size: 1rem;
+    opacity: 0.7;
+    }
+
+    .fa:hover{
+    color: #FFFF00;
+    }
+
+    #container{
+        height: 500px;
+        width: 100%;
+    }
+
+    .cross{
+        padding-right: 2px;
+    }
+
+    .cross:hover{
+        cursor: pointer;
+    }
+
+    #none{
+        font-size: 2rem; 
+        text-align: center;
+        margin: 5px;
+        font-weight: 900;
+    }
+
+    h1{
+        color: #fff;
+        text-shadow: 3px 3px 20px #b72970,
+            -2px 1px 30px #b72970;
+        text-align: center;
+        font-size: 3rem;
+    }
+</style>
+
+   
+<div class="col-lg-6 mt-3 mx-auto" style="width: 100%;">
+    <%- include('../partials/flash.ejs') %>
+</div>
+
+
+<div id="container">
+    <div class="title">Search For Movie</div>
+    <div class="search-wrapper">
+        <div class="fa fa-search"></div>
+        <input
+            type="text"
+            name=""
+            id="search"
+            placeholder="Search Movies or Web Series Here"
+            onkeyup="search()"
+        />
+        <div class="cross" onclick="clearInput()">❌</div>
+    </div>
+</div>
+
+<div class="row mt-5 " style="background-color: lightgray;">
+    <h1 style="margin-top: 10px;">Movies</h1>
+
+    <div id="movies">
+        <p id="none" style="display: none">
+            Sorry, The movie you were looking for is not available.
+        </p>
+
+        <div class="container d-flex flex-wrap justify-content-center ">
+            <% for(let item of movies){ %>
+            <div class="col-lg-4 product-card mb-3 hello">
+                <div class="card text-center shadow mt-3 mx-auto" style="width: 18rem;">
+                    <img src="<%=item.img%>" class="card-img-top img" alt="...">
+                    <div class="card-body">
+                        <h3 class="card-title" style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-weight: bolder; text-decoration: underline;">
+                            <i><%= item.name %></i>
+                        </h3>
+                        <h5 class="card-title"> Release year: <%= item.year %>
+                        </h5>
+                        <p class="card-text">
+                            <%= item.desc.substring(0,20) %>...
+                        </p>
+                        <a href="/movies/<%= item._id%>" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        </div>
+
+    </div>
+</div>
+
+
+<%- include('../partials/footer') %>
+
+<script>
+    const search = ()=>{
+        const searchBox = document.getElementById('search').value.toUpperCase() ;
+        const storeMovies = document.getElementById('movies') ;
+        const movies = document.querySelectorAll('.hello') ;
+        const moviesName = storeMovies.getElementsByTagName('h3') ;
+
+        let found = false ;
+
+        for(let i=0; i<moviesName.length; i++){
+            let match = movies[i].getElementsByTagName('h3')[0] ;
+            
+            if(match){
+                let val = match.textContent || match.innerHTML ;
+                
+                if(val.toUpperCase().indexOf(searchBox) > -1){
+                    movies[i].style.display = "" ;
+                    found = true ;
+                } else{
+                    movies[i].style.display = "none" ;
+                }
+            }
+        }
+
+        if(found === false) {
+            document.getElementById('none').style.display = "" ;
+        } else{
+            document.getElementById('none').style.display = "none" ;
+        }
+
+    }
+
+    const clearInput = ()=>{
+        document.getElementById('search').value = "" ;
+    }
+</script>
